@@ -126,50 +126,50 @@ function openPhoto(index) {
 
 function closeLightbox() { lightbox.classList.remove("open"); }
 
-async function makeZip(indices, filename) {
-  if (!window.JSZip) throw new Error("No se pudo cargar el módulo ZIP. Revisa tu conexión.");
-  const zip = new JSZip();
-  for (const index of indices) {
-    const photo = photos[index];
-    const response = await fetch(photo.url);
-    if (!response.ok) throw new Error(`No se pudo descargar ${photo.name}`);
-    zip.file(photo.name, await response.blob());
+function downloadPhotos(indices, button, defaultLabel) {
+  const uniqueIndices = [...new Set(indices)].filter(i => photos[i]);
+  if (!uniqueIndices.length) {
+    showToast("No hay fotografías para descargar.");
+    return;
   }
-  const blob = await zip.generateAsync({ type: "blob" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = filename;
-  link.click();
-  setTimeout(() => URL.revokeObjectURL(url), 1500);
+
+  if (button) button.disabled = true;
+
+  // Inicia una descarga individual por archivo, espaciadas para evitar
+  // que el navegador interprete todos los clics como una ráfaga.
+  uniqueIndices.forEach((index, position) => {
+    setTimeout(() => {
+      const photo = photos[index];
+      const link = document.createElement("a");
+      link.href = photo.url;
+      link.download = photo.name;
+      link.style.display = "none";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      if (position === uniqueIndices.length - 1 && button) {
+        button.disabled = false;
+        if (button.id === "download-selected") {
+          button.textContent = defaultLabel;
+          button.disabled = selected.size === 0;
+        }
+      }
+    }, position * 650);
+  });
+
+  showToast(`Iniciando ${uniqueIndices.length} descargas individuales…`);
 }
 
-async function downloadAll() {
+function downloadAll() {
   const button = document.getElementById("download-all");
-  button.disabled = true;
-  try {
-    await makeZip(photos.map((_, i) => i), "A-Birthday-to-Remember.zip");
-    showToast("Tu descarga está lista.");
-  } catch (error) {
-    console.error(error);
-    showToast(error.message);
-  } finally { button.disabled = false; }
+  downloadPhotos(photos.map((_, index) => index), button);
 }
 
-async function downloadSelected() {
+function downloadSelected() {
   const button = document.getElementById("download-selected");
-  button.disabled = true;
-  button.textContent = "Preparando…";
-  try {
-    await makeZip([...selected].sort((a, b) => a - b), "Fotografias-seleccionadas.zip");
-    showToast("Tu selección está lista para descargar.");
-  } catch (error) {
-    console.error(error);
-    showToast(error.message);
-  } finally {
-    button.disabled = selected.size === 0;
-    button.textContent = "Descargar selección";
-  }
+  button.textContent = "Descargando…";
+  downloadPhotos([...selected].sort((a, b) => a - b), button, "Descargar selección");
 }
 
 async function shareGallery() {
