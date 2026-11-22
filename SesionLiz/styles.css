@@ -66,7 +66,7 @@ button, a { font: inherit; }
 .section-nav a.active { border-bottom: 1px solid #222; }
 .gallery-heading {
   text-align: center;
-  padding: 158px 20px 88px;
+  padding: 88px 20px 88px;
 }
 .eyebrow {
   font-size: 9px;
