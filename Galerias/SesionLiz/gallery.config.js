@@ -1,0 +1,51 @@
+window.GALLERY_CONFIG = {
+  title: "A Birthday to Remember",
+  imageFolder: "images",
+
+  sections: {
+    sesion: {
+      label: "SESIÓN DE CUMPLEAÑOS",
+      photos: [
+        "DSC03329.jpg",
+        "DSC03329-2.jpg",
+        "DSC03355.jpg",
+        "DSC03355-2.jpg",
+        "DSC03359.jpg",
+        "DSC03359-2.jpg",
+        "DSC03364.jpg",
+        "DSC03364-2.jpg",
+        "DSC03370.jpg",
+        "DSC03370-2.jpg",
+        "DSC03384.jpg",
+        "DSC03384-2.jpg",
+        "DSC03406.jpg",
+        "DSC03406-2.jpg",
+        "DSC03440.jpg",
+        "DSC03440-2.jpg",
+        "DSC03509.jpg",
+        "DSC03519.jpg",
+        "DSC03550.jpg",
+        "DSC03552.jpg",
+        "DSC03556.jpg",
+        "DSC03557.jpg",
+        "DSC03573.jpg",
+        "DSC03575.jpg",
+        "DSC03594.jpg",
+        "DSC03595.jpg",
+        "DSC03602.jpg",
+        "DSC03602-2.jpg",
+        "DSC03627.jpg",
+        "DSC03658.jpg",
+        "DSC03671.jpg",
+        "DSC03671-2.jpg",
+        "DSC03684.jpg",
+        "DSC03710.jpg",
+        "DSC03715.jpg",
+        "DSC03718.jpg",
+        "DSC03750.jpg",
+        "DSC03852.jpg",
+        "DSC03871.jpg",
+      ]
+    }
+  }
+};

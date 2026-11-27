@@ -4,17 +4,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#ffffff">
-  <title>XV años de Emireth | Franco Flores · Fotografía</title>
+  <title>A Birthday to Remember | Franco Flores</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="../../shared/gallery.css">
 </head>
 <body>
   <header class="site-header">
-    <a class="brand" href="../" aria-label="Franco Flores Fotografía">
+    <a class="brand" href="../../" aria-label="Franco Flores Photography">
       FRANCO FLORES<span>FOTOGRAFÍA</span>
     </a>
+
     <div class="header-actions">
       <button class="text-action" id="toggle-select" type="button">Seleccionar</button>
       <button class="icon-action" id="download-all" type="button" aria-label="Descargar todas las fotografías" title="Descargar todas las fotografías">
@@ -23,19 +24,26 @@
       <button class="icon-action" id="share-gallery" type="button" aria-label="Compartir galería" title="Compartir galería">
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="m8.2 10.8 7.5-4.5M8.2 13.2l7.5 4.5"/></svg>
       </button>
+      <button class="icon-action menu-toggle" id="menu-toggle" type="button" aria-label="Abrir menú" title="Menú">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
     </div>
   </header>
 
-  <nav class="section-nav" aria-label="Secciones del evento">
-    <button class="section-tab active" type="button" data-tab="ceremonia">CEREMONIA</button>
-    <button class="section-tab" type="button" data-tab="recepcion">RECEPCIÓN</button>
+  <!-- <nav class="section-nav" aria-label="Secciones del evento">
+    <button class="section-tab active" type="button" data-tab="ceremonia">SESIÓN DE CUMPLEAÑOS</button>
+  </nav> -->
+  <nav class="section-nav" id="section-tabs" aria-label="Secciones del evento">
+    <button class="section-tab active" type="button" data-tab="sesion">
+      Sesion de Cumpleaños
+    </button>
   </nav>
 
   <main>
     <section class="gallery-heading">
       <p class="eyebrow">FRANCO FLORES · PHOTOGRAPHY</p>
-      <h1>XV años de Emireth</h1>
-      <p class="photo-count" id="photo-count">Selecciona una sección</p>
+      <h1>A Birthday to Remember</h1>
+      <p class="photo-count" id="photo-count">Cargando fotografías…</p>
     </section>
 
     <section class="gallery-tools" id="selection-tools" hidden>
@@ -52,18 +60,23 @@
     <div class="load-more-status" id="load-more-status" aria-live="polite"></div>
     <div class="load-more-sentinel" id="load-more-sentinel" aria-hidden="true"></div>
 
-    <footer class="site-footer">
-      <p class="footer-title">Emireth, gracias por permitirme contar esta historia.</p>
+    <footer class="site-footer" id="about">
+      <p class="footer-title">Gracias por compartir este momento.</p>
       <p>Un recuerdo para volver a vivirlo una y otra vez.</p>
       <span class="footer-credit">FRANCO FLORES · PHOTOGRAPHY</span>
     </footer>
   </main>
 
+  <div class="menu-panel" id="menu-panel" hidden>
+    <button id="menu-download" type="button">Descargar todas las fotografías</button>
+    <a href="#about" id="menu-about">Acerca de esta galería</a>
+  </div>
+
   <div class="lightbox" id="lightbox" aria-modal="true" role="dialog" aria-label="Visor de fotografías">
     <div class="lightbox-top">
       <span id="lightbox-caption"></span>
       <div class="lightbox-actions">
-        <a class="lightbox-download" id="download-one" href="#" download>Descargar alta calidad</a>
+        <a class="lightbox-download" id="download-one" href="#" download>Descargar fotografía</a>
         <button id="close-lightbox" type="button" aria-label="Cerrar">×</button>
       </div>
     </div>
@@ -73,6 +86,7 @@
   </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="gallery.js"></script>
+  <script src="gallery.config.js" defer></script>
+  <script src="../../shared/gallery.js" defer></script>
 </body>
 </html>

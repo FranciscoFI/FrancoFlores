@@ -1,1 +1,0 @@
-Coloca aquí las fotografías originales de alta resolución. El nombre debe coincidir con el campo name de gallery.js.
