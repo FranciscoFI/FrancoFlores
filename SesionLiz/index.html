@@ -12,7 +12,7 @@
 </head>
 <body>
   <header class="site-header">
-    <a class="brand" href="../" aria-label="Franco Flores Photography">
+    <a class="brand" href="../../" aria-label="Franco Flores Photography">
       FRANCO FLORES<span>FOTOGRAFÍA</span>
     </a>
 
@@ -38,7 +38,7 @@
   <main>
     <section class="gallery-heading">
       <p class="eyebrow">FRANCO FLORES · PHOTOGRAPHY</p>
-      <h1>Lizbeth Vergara</h1>
+      <h1>A Birthday to Remember</h1>
       <p class="photo-count" id="photo-count">Cargando fotografías…</p>
     </section>
 
@@ -53,6 +53,8 @@
     <section class="mosaic" id="gallery" aria-label="Galería de fotografías">
       <p class="loading">Cargando fotografías…</p>
     </section>
+    <div class="load-more-status" id="load-more-status" aria-live="polite"></div>
+    <div class="load-more-sentinel" id="load-more-sentinel" aria-hidden="true"></div>
 
     <footer class="site-footer" id="about">
       <p class="footer-title">Gracias por compartir este momento.</p>
@@ -71,9 +73,6 @@
       <span id="lightbox-caption"></span>
       <div class="lightbox-actions">
         <a class="lightbox-download" id="download-one" href="#" download>Descargar fotografía</a>
-        <button class="icon-action" id="download-all" type="button" aria-label="Descargar todas las fotografías" title="Descargar todas las fotografías">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 5-5m-5 5-5-5M4 20h16"/></svg>
-        </button>
         <button id="close-lightbox" type="button" aria-label="Cerrar">×</button>
       </div>
     </div>

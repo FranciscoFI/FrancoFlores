@@ -54,6 +54,9 @@ const selected = new Set();
 let photos = [];
 let activeIndex = 0;
 let selectionMode = false;
+let renderedCount = 0;
+const BATCH_SIZE = 30;
+let loadObserver;
 
 function numberLabel(index) { return String(index + 1).padStart(2, "0"); }
 
@@ -71,8 +74,8 @@ function updateSelectionUI() {
   document.getElementById("download-selected").disabled = selected.size === 0;
   document.getElementById("toggle-select").textContent = selectionMode ? "Cancelar" : "Seleccionar";
   document.getElementById("selection-tools").hidden = !selectionMode;
-  gallery.querySelectorAll(".photo-card").forEach((card, i) => {
-    card.classList.toggle("selected", selected.has(i));
+  gallery.querySelectorAll(".photo-card").forEach(card => {
+    card.classList.toggle("selected", selected.has(Number(card.dataset.index)));
   });
 }
 
@@ -93,7 +96,8 @@ function setCardSpan(card, image) {
 
 function createCard(photo, index) {
   const card = document.createElement("figure");
-  card.className = "photo-card";
+  card.className = selected.has(index) ? "photo-card selected" : "photo-card";
+  card.dataset.index = String(index);
   const image = document.createElement("img");
   image.src = photo.url;
   image.alt = `Fotografía ${index + 1}`;
@@ -193,6 +197,27 @@ async function shareGallery() {
   }
 }
 
+function updateLoadStatus() {
+  const status = document.getElementById("load-more-status");
+  if (!status) return;
+  status.textContent = renderedCount < photos.length
+    ? `Mostrando ${renderedCount} de ${photos.length} fotografías · Desplázate para ver más`
+    : `Has llegado al final · ${photos.length} fotografías`;
+}
+
+function loadMorePhotos() {
+  if (renderedCount >= photos.length) {
+    updateLoadStatus();
+    return;
+  }
+  const next = Math.min(renderedCount + BATCH_SIZE, photos.length);
+  for (let index = renderedCount; index < next; index++) {
+    gallery.appendChild(createCard(photos[index], index));
+  }
+  renderedCount = next;
+  updateLoadStatus();
+}
+
 function loadGallery() {
   photos = IMAGE_FILES
     .map(name => String(name).trim())
@@ -211,7 +236,27 @@ function loadGallery() {
 
   document.getElementById("photo-count").textContent = `${photos.length} fotografías`;
   gallery.innerHTML = "";
-  photos.forEach((photo, index) => gallery.appendChild(createCard(photo, index)));
+  renderedCount = 0;
+  loadMorePhotos();
+
+  const sentinel = document.getElementById("load-more-sentinel");
+  window.removeEventListener("scroll", onScrollLoadMore);
+  if (loadObserver) loadObserver.disconnect();
+  if ("IntersectionObserver" in window && sentinel) {
+    loadObserver = new IntersectionObserver(entries => {
+      if (entries.some(entry => entry.isIntersecting)) loadMorePhotos();
+    }, { rootMargin: "700px 0px" });
+    loadObserver.observe(sentinel);
+  } else {
+    // Fallback for browsers without IntersectionObserver.
+    window.addEventListener("scroll", onScrollLoadMore, { passive: true });
+  }
+}
+
+function onScrollLoadMore() {
+  const sentinel = document.getElementById("load-more-sentinel");
+  if (!sentinel || renderedCount >= photos.length) return;
+  if (sentinel.getBoundingClientRect().top < window.innerHeight + 700) loadMorePhotos();
 }
 
 document.getElementById("toggle-select").addEventListener("click", () => {
