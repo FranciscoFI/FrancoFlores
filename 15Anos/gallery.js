@@ -94,7 +94,7 @@ let photos = [];
 let activeIndex = 0;
 let selectionMode = false;
 let renderedCount = 0;
-const BATCH_SIZE = 30;
+const BATCH_SIZE = 20;
 let loadObserver;
 
 function previewPath(section, photo) {
