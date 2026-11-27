@@ -8,16 +8,82 @@ const GALLERY_SECTIONS = {
   ceremonia: {
     label: "Ceremonia",
     photos: [
-      // { name: "DSC00001.jpg", preview: "DSC00001.webp" },
-    ],
+      "DSC07607.jpg",
+      "DSC07631.jpg",
+      "DSC07632.jpg",
+      "DSC07634.jpg",
+      "DSC07638.jpg",
+      "DSC07640.jpg",
+      "DSC07641.jpg",
+      "DSC07642.jpg",
+      "DSC07648.jpg",
+      "DSC07652.jpg",
+      "DSC07654.jpg",
+      "DSC07655.jpg",
+      "DSC07660.jpg",
+      "DSC07661.jpg",
+      "DSC07663.jpg",
+      "DSC07664.jpg",
+      "DSC07667.jpg",
+      "DSC07668.jpg",
+      "DSC07669.jpg",
+      "DSC07673.jpg",
+      "DSC07685.jpg",
+      "DSC07691.jpg",
+      "DSC07693.jpg",
+      "DSC07694.jpg",
+      "DSC07705.jpg",
+      "DSC07707.jpg",
+      "DSC07713.jpg",
+      "DSC07714.jpg",
+      "DSC07718.jpg",
+      "DSC07722.jpg",
+      "DSC07729.jpg",
+      "DSC07729-2.jpg",
+      "DSC07732.jpg",
+      "DSC07746.jpg",
+      "DSC07752.jpg",
+      "DSC07753.jpg",
+      "DSC07757.jpg",
+      "DSC07762.jpg",
+      "DSC07764.jpg",
+      "DSC07766.jpg",
+      "DSC07766-2.jpg",
+      "DSC07771.jpg",
+      "DSC07773.jpg",
+      "DSC07778.jpg",
+      "DSC07780.jpg",
+      "DSC07782.jpg",
+      "DSC07784.jpg",
+      "DSC07786.jpg",
+      "DSC07787.jpg",
+      "DSC07790.jpg",
+      "DSC07792.jpg",
+      "DSC07796.jpg",
+      "DSC07797.jpg",
+      "DSC07800.jpg",
+      "DSC07802.jpg",
+      "DSC07812.jpg",
+      "DSC07820.jpg",
+      "DSC07828.jpg",
+      "DSC07831.jpg",
+      "DSC07836.jpg",
+      "DSC07843.jpg",
+      "DSC07846.jpg",
+      "DSC07847.jpg",
+      "DSC07849.jpg",
+      "DSC07850.jpg",
+      "DSC07852.jpg",
+      "DSC07871.jpg"
+    ]
   },
+
   recepcion: {
     label: "Recepción",
-    photos: [
-      // { name: "DSC00002.jpg", preview: "DSC00002.webp" },
-    ],
-  },
+    photos: []
+  }
 };
+
 
 const gallery = document.getElementById("gallery");
 const lightbox = document.getElementById("lightbox");
@@ -32,10 +98,10 @@ const BATCH_SIZE = 30;
 let loadObserver;
 
 function previewPath(section, photo) {
-  return `images/${section}/preview/${encodeURIComponent(photo.preview || photo.name)}`;
+  return `images/${section}/preview/${encodeURIComponent(photo)}`;
 }
 function downloadPath(section, photo) {
-  return `downloads/${section}/${encodeURIComponent(photo.name)}`;
+  return `downloads/${section}/${encodeURIComponent(photo)}`;
 }
 function numberLabel(index) { return String(index + 1).padStart(2, "0"); }
 
@@ -83,7 +149,7 @@ function createCard(photo, index) {
   image.addEventListener("load", () => setCardSpan(card, image));
   image.addEventListener("error", () => {
     card.classList.add("missing-image");
-    image.alt = `No se encontró la vista previa: ${photo.preview || photo.name}`;
+    image.alt = `No se encontró la vista previa: ${photo}`;
   });
   const number = document.createElement("span");
   number.className = "photo-number";
@@ -167,11 +233,11 @@ function openPhoto(index) {
   activeIndex = (index + photos.length) % photos.length;
   const photo = photos[activeIndex];
   lightboxImage.src = previewPath(activeSection, photo);
-  lightboxImage.alt = photo.name;
+  lightboxImage.alt = photo;
   document.getElementById("lightbox-caption").textContent = `${numberLabel(activeIndex)} / ${numberLabel(photos.length - 1)}`;
   const link = document.getElementById("download-one");
   link.href = downloadPath(activeSection, photo);
-  link.download = photo.name;
+  link.download = photo;
   lightbox.classList.add("open");
 }
 function closeLightbox() { lightbox.classList.remove("open"); }
@@ -188,7 +254,7 @@ function downloadPhotos(indices, button, defaultLabel) {
       const photo = photosAtStart[index];
       const link = document.createElement("a");
       link.href = downloadPath(sectionAtStart, photo);
-      link.download = photo.name;
+      link.download = photo;
       link.style.display = "none";
       document.body.appendChild(link);
       link.click();
