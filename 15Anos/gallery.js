@@ -100,12 +100,8 @@ const BATCH_SIZE = 20;
 let loadObserver;
 
 // Rutas
-function previewPath(section, photo) {
-  return `images/${section}/preview/${encodeURIComponent(photo)}`;
-}
-
-function downloadPath(section, photo) {
-  return `downloads/${section}/${encodeURIComponent(photo)}`;
+function imagePath(section, photo) {
+  return `images/${section}/${encodeURIComponent(photo)}`;
 }
 
 function numberLabel(index) {
@@ -185,7 +181,7 @@ function createCard(photo, index) {
 
   const image = document.createElement("img");
 
-  image.src = previewPath(activeSection, photo);
+  image.src = imagePath(activeSection, photo);
   image.alt = `Fotografía ${index + 1}`;
   image.loading = "lazy";
   image.decoding = "async";
@@ -363,7 +359,7 @@ function openPhoto(index) {
 
   const photo = photos[activeIndex];
 
-  lightboxImage.src = previewPath(activeSection, photo);
+  lightboxImage.src = imagePath(activeSection, photo);
   lightboxImage.alt = photo;
 
   document.getElementById("lightbox-caption").textContent =
@@ -371,7 +367,7 @@ function openPhoto(index) {
 
   const link = document.getElementById("download-one");
 
-  link.href = downloadPath(activeSection, photo);
+  link.href = imagePath(activeSection, photo);
   link.download = photo;
 
   lightbox.classList.add("open");
@@ -465,7 +461,7 @@ function downloadPhotos(indices, button, defaultLabel) {
 
       const link = document.createElement("a");
 
-      link.href = downloadPath(sectionAtStart, photo);
+      link.href = imagePath(sectionAtStart, photo);
       link.download = photo;
       link.style.display = "none";
 
