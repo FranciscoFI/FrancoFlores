@@ -361,8 +361,7 @@ function updateSelectionUI() {
 // --------------------------------------------------
 
 function downloadPhotos(indices, button, defaultLabel) {
-  const uniqueIndices = [...new Set(indices)]
-    .filter(index => photos[index]);
+  const uniqueIndices = [...new Set(indices)].filter(i => photos[i]);
 
   if (!uniqueIndices.length) {
     showToast("No hay fotografías para descargar.");
@@ -374,7 +373,6 @@ function downloadPhotos(indices, button, defaultLabel) {
   uniqueIndices.forEach((index, position) => {
     setTimeout(() => {
       const photo = photos[index];
-
       const link = document.createElement("a");
 
       link.href = photo.url;
@@ -399,12 +397,43 @@ function downloadPhotos(indices, button, defaultLabel) {
   showToast(`Iniciando ${uniqueIndices.length} descargas individuales…`);
 }
 
+
 function downloadAll() {
+  if (!photos.length) {
+    showToast("No hay fotografías para descargar.");
+    return;
+  }
+
+  const modal = document.getElementById("download-confirm-modal");
+  const message = document.getElementById("download-modal-message");
+
+  message.textContent =
+    `Se descargarán las ${photos.length} fotografías de esta sección. ` +
+    "Los archivos se descargarán individualmente.";
+
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("modal-open");
+}
+
+function closeDownloadModal() {
+  const modal = document.getElementById("download-confirm-modal");
+
+  modal.classList.remove("open");
+  modal.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("modal-open");
+}
+
+function confirmDownloadAll() {
+  closeDownloadModal();
+
   downloadPhotos(
     photos.map((_, index) => index),
-    document.getElementById("download-all")
+    document.getElementById("download-all"),
+    "Descargar todas"
   );
 }
+
 
 function downloadSelected() {
   const button = document.getElementById("download-selected");
@@ -559,6 +588,29 @@ document.addEventListener("keydown", event => {
   if (event.key === "ArrowLeft") openPhoto(activeIndex - 1);
   if (event.key === "ArrowRight") openPhoto(activeIndex + 1);
 });
+
+
+document.getElementById("download-all")
+  .addEventListener("click", downloadAll);
+
+document.getElementById("confirm-download")
+  .addEventListener("click", confirmDownloadAll);
+
+document.getElementById("cancel-download")
+  .addEventListener("click", closeDownloadModal);
+
+document.getElementById("cancel-download-x")
+  .addEventListener("click", closeDownloadModal);
+
+document.querySelector("[data-close-download-modal]")
+  .addEventListener("click", closeDownloadModal);
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") {
+    closeDownloadModal();
+  }
+});
+
 
 // --------------------------------------------------
 // Ajuste de tarjetas al cambiar el tamaño

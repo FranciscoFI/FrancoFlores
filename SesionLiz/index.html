@@ -8,11 +8,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../shared/gallery.css">
+  <link rel="stylesheet" href="../shared/gallery.css">
 </head>
 <body>
   <header class="site-header">
-    <a class="brand" href="../../" aria-label="Franco Flores Photography">
+    <a class="brand" href="../" aria-label="Franco Flores Photography">
       FRANCO FLORES<span>FOTOGRAFÍA</span>
     </a>
 
@@ -85,8 +85,46 @@
     <button class="lightbox-nav next" id="next-photo" type="button" aria-label="Fotografía siguiente">›</button>
   </div>
 
+    <div class="confirm-modal" id="download-confirm-modal" aria-hidden="true">
+    <div class="confirm-modal-backdrop" data-close-download-modal></div>
+
+    <div
+      class="confirm-modal-content"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="download-modal-title"
+    >
+      <button
+        class="confirm-modal-close"
+        type="button"
+        id="cancel-download-x"
+        aria-label="Cerrar"
+      >
+        ×
+      </button>
+
+      <p class="confirm-modal-eyebrow">DESCARGA DE FOTOGRAFÍAS</p>
+
+      <h2 id="download-modal-title">¿Descargar todas las fotografías?</h2>
+
+      <p id="download-modal-message">
+        Se descargarán todas las fotografías de esta sección.
+      </p>
+
+      <div class="confirm-modal-actions">
+        <button type="button" id="cancel-download">
+          Cancelar
+        </button>
+
+        <button type="button" id="confirm-download">
+          Confirmar descarga
+        </button>
+      </div>
+    </div>
+  </div>
+
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="gallery.config.js" defer></script>
-  <script src="../../shared/gallery.js" defer></script>
+  <script src="../shared/gallery.js" defer></script>
 </body>
 </html>
