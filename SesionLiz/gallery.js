@@ -55,7 +55,7 @@ let photos = [];
 let activeIndex = 0;
 let selectionMode = false;
 let renderedCount = 0;
-const BATCH_SIZE = 30;
+const BATCH_SIZE = 20;
 let loadObserver;
 
 function numberLabel(index) { return String(index + 1).padStart(2, "0"); }
